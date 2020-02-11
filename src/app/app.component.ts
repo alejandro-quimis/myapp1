@@ -1,7 +1,7 @@
+import { SplashScreen } from '@ionic-native/splash-screen';
 import { Component } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 @Component({
@@ -12,15 +12,21 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 export class AppComponent {
   public appPages = [
     {
-      title: 'Home',
-      url: '/home',
+      title: 'PRODUCTOS',
+      url: '/',
       icon: 'home'
     },
     {
-      title: 'List',
-      url: '/list',
+      title: 'LISTA DE PRODUCTOS',
+      url: '/listar',
       icon: 'list'
+    },
+    {
+      title: 'LOGOUT',
+      url: '/logout',
+      icon: 'exit'
     }
+   
   ];
 
   constructor(

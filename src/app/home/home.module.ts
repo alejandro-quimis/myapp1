@@ -5,6 +5,8 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
+import { GuardGuard } from '../auth/guard.guard';
+import { ProductoPage } from '../producto/producto.page';
 
 @NgModule({
   imports: [
@@ -13,11 +15,11 @@ import { HomePage } from './home.page';
     IonicModule,
     RouterModule.forChild([
       {
-        path: '',
+        path: '', canActivate: [GuardGuard],
         component: HomePage
       }
     ])
   ],
-  declarations: [HomePage]
+  declarations: [HomePage, ProductoPage]
 })
 export class HomePageModule {}
