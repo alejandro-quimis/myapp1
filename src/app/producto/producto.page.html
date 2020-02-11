@@ -14,7 +14,7 @@
     <ion-title padding>Buscar Producto</ion-title>
     <ion-searchbar (ionInput)="getItems($event)" placeholder="Inserte Producto"></ion-searchbar>
     <ion-list>
-        <ion-item *ngFor="let item of items" (click)="abrirModal()">
+        <ion-item *ngFor="let item of items" (click)="abrirModal(item)">
             {{ item.nombre }}
         </ion-item>
     </ion-list>

@@ -11,18 +11,14 @@ import { ProductoPage } from './producto.page';
 import { ComprarPageModule } from '../comprar/comprar.module';
 
 @NgModule({
-  entryComponents: [
-    ComprarPage
-  ],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     ProductoPageRoutingModule,
-    ComprarPageModule
   ],
-  declarations: [ProductoPage,ComprarPage],
-  exports: [ProductoPageRoutingModule
+  declarations: [],
+  exports: [ProductoPageRoutingModule,
   ]
 })
 export class ProductoPageModule {}

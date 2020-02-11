@@ -1,9 +1,63 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>comprar</ion-title>
-  </ion-toolbar>
+    <ion-toolbar color="tertiary">
+        <ion-title>Edit Student Record</ion-title>
+    </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
+    <form [formGroup]="ngform" (ngSubmit)="submit()">
+        <ion-item>
+            <ion-label>Producto</ion-label>
+            <ion-input formControlName="producto"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Cantidad</ion-label>
+            <ion-input (ionChange)="cambio($event)" formControlName="cantidad" type="number"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Precio Unitario</ion-label>
+            <ion-input formControlName="valor"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Total</ion-label>
+            <ion-input formControlName="total"></ion-input>
+        </ion-item>
+        <ion-grid>
+            <ion-row>
+                <ion-col>
+                    <ion-button type="submit" color="success" size="small">
+                        comprar
+                    </ion-button>
 
+                </ion-col>
+                <ion-col>
+                    <ion-button (click)="closeModal()" color="danger" size="small">
+                        Cancel
+                    </ion-button>
+
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+
+    </form>
 </ion-content>
+<!-- <ion-header>
+    <ion-toolbar text-center>
+        <ion-title>Realizar Compra</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-grid>
+        <ion-row>
+            <ion-col text-center>
+                ID : {{modelId}}
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col text-center>
+                <ion-button (click)="closeModal()">Close Modal</ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content> -->

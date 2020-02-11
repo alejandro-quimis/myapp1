@@ -4,11 +4,45 @@
             <ion-menu-button></ion-menu-button>
         </ion-buttons>
         <ion-title>
-            Lista de productos
+            Lista de Compras
         </ion-title>
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">cant</th>
+                <th scope="col">date</th>
+                <th scope="col">producto</th>
+                <th scope="col">accion</th>
+                <th scope="col">accion</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of compras; let i = index;">
+                <td>{{ i + 1 }}</td>
+                <td>{{ item.cantidad }}</td>
+                <td>{{ item.fecha }}</td>
+                <td>{{ item.productos.nombre }}</td>
+                <td>{{ item.total }}</td>
 
+                <td style="display: flex">
+                    <ion-button color="warning" size="small" (click)="abrirModal(item)">
+                        <ion-icon name="create"></ion-icon>
+                    </ion-button>
+
+                    <ion-button color="danger" size="small">
+                        <!--(click)="delete(item)"-->
+                        <ion-icon name="trash"></ion-icon>
+                    </ion-button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- <ion-button [routerLink]="['/create']">
+        Add Student
+    </ion-button> -->
 </ion-content>

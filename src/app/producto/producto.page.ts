@@ -16,18 +16,16 @@ export class ProductoPage implements OnInit {
   public productos: any[] = [];
   public lista: Producto[] = [];
   items: Producto[] = [];
-
+  numero = 1;
   constructor(private modalCtrl: ModalController, public _login: AuthService, private productService: ProductoService) {
     this.initializeItems();
   }
 
-  ngOnInit(){
-    
+  ngOnInit() {
     this.productService.lista().subscribe((e: any) => {
       this.lista = e;
-  });
+    });
   }
-  
   initializeItems() {
     this.items = this.lista;
   }
@@ -44,13 +42,11 @@ export class ProductoPage implements OnInit {
     }
   }
 
-  async abrirModal() {
-
+  async abrirModal(item) {
     const modal = await this.modalCtrl.create({
       component: ComprarPage,
       componentProps: {
-        nombre: 'Fernando',
-        pais: 'Costa Rica'
+        item, numero: this.numero
       }
     });
 
