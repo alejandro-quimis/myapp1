@@ -13,12 +13,16 @@ import { async } from '@angular/core/testing';
   styleUrls: ['./comprar.page.scss'],
 })
 export class ComprarPage implements OnInit {
+  numero = 0;
   modelproducto: any;
   public ngform: FormGroup;
   public compra: Compras;
   // tslint:disable-next-line: max-line-length
   constructor(public alertCtrl: AlertController, private compraService: ComprasService, public _login: AuthService,private modalController: ModalController, private navParams: NavParams) {
     this.ngform = new FormGroup({
+      codigoCompra: new FormControl({value: '', disabled: true}, Validators.required),
+      codigousuario: new FormControl({value: '', disabled: true}, Validators.required),
+      fecha: new FormControl({value: '', disabled: true}, Validators.required),
       codigo: new FormControl( {value: '', disabled: true}, Validators.required),
       producto: new FormControl( {value: '', disabled: true}, Validators.required),
       cantidad: new FormControl( '' , Validators.required),
@@ -29,8 +33,9 @@ export class ComprarPage implements OnInit {
 
   }
   ngOnInit() {
-    console.log(this.navParams.data.numero);
-    if (this.navParams.data.numero === 1){ 
+
+    this.numero = this.navParams.data.numero;
+    if (this.navParams.data.numero === 1) { 
       this.modelproducto = this.navParams.data.item;
       this.ngform = new FormGroup({
         codigo: new FormControl( {value: this.modelproducto.codigo, disabled: true}, Validators.required),
@@ -47,22 +52,23 @@ export class ComprarPage implements OnInit {
         codigousuario: new FormControl( {value: this.modelproducto.usuario, disabled: true}, Validators.required),
         fecha: new FormControl( {value: this.modelproducto.fecha, disabled: true}, Validators.required),
         codigo: new FormControl( {value: this.modelproducto.producto, disabled: true}, Validators.required),
-        producto: new FormControl({value: this.modelproducto.nombre, disabled: true}, Validators.required),
-        cantidad: new FormControl( {value: this.modelproducto.nombre, disabled: true}, Validators.required),
-        valor: new FormControl( {value: this.modelproducto.valor, disabled: true}, Validators.required),
-        total: new FormControl( {value: '', disabled: true}, Validators.required),
+        producto: new FormControl({value: this.modelproducto.productos.nombre, disabled: true}, Validators.required),
+        cantidad: new FormControl(this.modelproducto.cantidad, Validators.required),
+        valor: new FormControl( {value: this.modelproducto.productos.valor, disabled: true}, Validators.required),
+        total: new FormControl( {value: this.modelproducto.total, disabled: true}, Validators.required),
       });
-    } 
+    }
 }
- 
+
   cambio(ev){
     this.ngform.get('total').setValue(Number(this.ngform.get('cantidad').value) * Number(this.ngform.get('valor').value));
   }
   async closeModal() {
-    const onClosedData = '';
+    const onClosedData = 'ok';
     await this.modalController.dismiss(onClosedData);
   }
   async submit(){
+    if(this.numero ===1){
     this.compra = new Compras();
     this.compra.total = Number(this.ngform.get('total').value);
     this.compra.cantidad = this.ngform.get('cantidad').value;
@@ -108,6 +114,54 @@ export class ComprarPage implements OnInit {
 
     }
     });
+  } else if (this.numero === 2 ) {
+    this.compra = new Compras();
+    this.compra.codigo =   this.ngform.get('codigoCompra').value;
+    this.compra.total = Number(this.ngform.get('total').value);
+    this.compra.cantidad = this.ngform.get('cantidad').value;
+    this.compra.estado = 'a';
+    this.compra.producto = this.ngform.get('codigo').value;
+    this.compra.total = this.ngform.get('total').value;
+    this.compra.fecha = this.ngform.get('fecha').value;
+    this.compra.usuario = this.ngform.get('codigousuario').value;
+    this.compraService.actualizar(this.compra,this.compra.codigo).subscribe((data) => {
+      console.log(data);
+    },
+    async (err) => {
+      console.log(err);
+      console.log(err.status);
+      if (err.status === 201) {
+        const alert = await this.alertCtrl.create({
+          header: 'Success',
+          subHeader: 'COMPRA ACTUALIZADA CORRECTAMENTE',
+          buttons: [
+            {
+                text: 'Ok',
+                handler: (blah) => {
+                  this.closeModal();
+                }
+            }
+          ]
+          });
+        await alert.present();
+    } else {
+      const alert = await this.alertCtrl.create({
+        header: 'Alert',
+        subHeader: 'ERROR AL ACTUALIZAR',
+        buttons: [
+          {
+              text: 'Ok',
+              handler: (blah) => {
+              console.log('Botón OK');
+              }
+          }
+        ]
+        });
+      await alert.present();
+
+    }
+    });
+  }
   }
 
 

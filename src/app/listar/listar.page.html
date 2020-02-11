@@ -28,21 +28,16 @@
                 <td>{{ item.fecha }}</td>
                 <td>{{ item.productos.nombre }}</td>
                 <td>{{ item.total }}</td>
-
                 <td style="display: flex">
                     <ion-button color="warning" size="small" (click)="abrirModal(item)">
                         <ion-icon name="create"></ion-icon>
                     </ion-button>
 
-                    <ion-button color="danger" size="small">
-                        <!--(click)="delete(item)"-->
+                    <ion-button color="danger" size="small" (click)="eliminar(item)">
                         <ion-icon name="trash"></ion-icon>
                     </ion-button>
                 </td>
             </tr>
         </tbody>
     </table>
-    <!-- <ion-button [routerLink]="['/create']">
-        Add Student
-    </ion-button> -->
 </ion-content>
