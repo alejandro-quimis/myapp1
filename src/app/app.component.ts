@@ -1,15 +1,17 @@
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  usuario: string;
   public appPages = [
     {
       title: 'PRODUCTOS',
@@ -26,13 +28,16 @@ export class AppComponent {
       url: '/logout',
       icon: 'exit'
     }
-   
   ];
+  ngOnInit(){
+    this.usuario = this.AuthService.geUserLogin().user;
 
+  }
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private AuthService: AuthService
   ) {
     this.initializeApp();
   }

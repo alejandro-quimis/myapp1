@@ -1,43 +1,84 @@
 <ion-header>
-    <ion-toolbar>
+    <ion-toolbar color="tertiary">
         <ion-buttons slot="start">
             <ion-menu-button></ion-menu-button>
         </ion-buttons>
         <ion-title>
-            Lista de Compras
+            LISTA DE COMPRAS
         </ion-title>
+        <ion-button padding-end small slot="end" [routerLink]="['/logout']">
+            <ion-icon name="exit"></ion-icon>
+        </ion-button>
     </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">cant</th>
-                <th scope="col">date</th>
-                <th scope="col">producto</th>
-                <th scope="col">accion</th>
-                <th scope="col">accion</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let item of compras; let i = index;">
-                <td>{{ i + 1 }}</td>
-                <td>{{ item.cantidad }}</td>
-                <td>{{ item.fecha }}</td>
-                <td>{{ item.productos.nombre }}</td>
-                <td>{{ item.total }}</td>
-                <td style="display: flex">
-                    <ion-button color="warning" size="small" (click)="abrirModal(item)">
-                        <ion-icon name="create"></ion-icon>
-                    </ion-button>
+<!-- <ion-content padding>
 
-                    <ion-button color="danger" size="small" (click)="eliminar(item)">
-                        <ion-icon name="trash"></ion-icon>
-                    </ion-button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <ion-list>
+        <ion-item *ngFor="let item of compras; let i = index;">
+            <ion-label>
+                <h5>
+                    <ion-icon name="list"></ion-icon> Nombre: {{ item.productos.nombre|uppercase }}
+                </h5>
+                <p>
+                    <ion-icon name="checkmark"></ion-icon> Cantidad: {{ item.cantidad }}
+                </p>
+                <p>
+                    <ion-icon name="cash"></ion-icon> Total: {{ item.total }}
+                </p>
+                <p>
+                    <ion-icon name="calendar"></ion-icon> Fecha: {{ item.fecha }}
+                </p>
+            </ion-label>
+            <div class="item-note" item-end>
+                <button ion-button class="button-inner" (click)="abrirModal(item)">
+                    <ion-icon name="create" style="zoom:2.0"></ion-icon>
+                </button>
+                <button ion-button (click)="eliminar(item)">
+                    <ion-icon name="trash" style="zoom:2.0"></ion-icon>
+                </button>
+            </div>
+        </ion-item>
+    </ion-list>
+
+</ion-content> -->
+
+
+
+<ion-content padding>
+
+    <ion-list>
+        <ion-item *ngFor="let item of dataList">
+            <ion-label>
+                <h5>
+                    <ion-icon name="barcode"></ion-icon> Codigo: {{ item.codigo }}
+                </h5>
+                <h5>
+                    <ion-icon name="list"></ion-icon> Nombre: {{ item.productos.nombre|uppercase }}
+                </h5>
+                <p>
+                    <ion-icon name="checkmark"></ion-icon> Cantidad: {{ item.cantidad }}
+                </p>
+                <p>
+                    <ion-icon name="cash"></ion-icon> Total: {{ item.total }}
+                </p>
+                <p>
+                    <ion-icon name="calendar"></ion-icon> Fecha: {{ item.fecha }}
+                </p>
+            </ion-label>
+            <div class="item-note" item-end>
+                <button ion-button class="button-inner" (click)="abrirModal(item)">
+                    <ion-icon name="create" style="zoom:2.0"></ion-icon>
+                </button>
+                <button ion-button (click)="eliminar(item)">
+                    <ion-icon name="trash" style="zoom:2.0"></ion-icon>
+                </button>
+            </div>
+        </ion-item>
+    </ion-list>
+
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+        <ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Cargando Datos..">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 </ion-content>

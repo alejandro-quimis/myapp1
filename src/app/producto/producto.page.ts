@@ -11,8 +11,6 @@ import { ProductoService } from '../services/producto/producto.service';
   styleUrls: ['./producto.page.scss'],
 })
 export class ProductoPage implements OnInit {
-
- 
   public productos: any[] = [];
   public lista: Producto[] = [];
   items: Producto[] = [];
@@ -26,6 +24,7 @@ export class ProductoPage implements OnInit {
       this.lista = e;
     });
   }
+
   initializeItems() {
     this.items = this.lista;
   }
@@ -35,26 +34,21 @@ export class ProductoPage implements OnInit {
     // set val to the value of the ev target
     var val = ev.target.value;
     // if the value is an empty string don't filter the items
-    if (val && val.trim() != '') {
-      this.items = this.items.filter((item) => {
-        return (item.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1);
-      })
-    }
-  }
-
-  async abrirModal(item) {
-    const modal = await this.modalCtrl.create({
-      component: ComprarPage,
-      componentProps: {
-        item, numero: this.numero
+      if (val && val.trim() != '') {
+        this.items = this.items.filter((item) => {
+          return (item.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        });
       }
-    });
+    }
 
-    await modal.present();
-
-    const { data } = await modal.onDidDismiss();
-
-    console.log('Retorno del modal', data );
-
+    async abrirModal(item) {
+      const modal = await this.modalCtrl.create({
+        component: ComprarPage,
+        componentProps: {
+          item, numero: this.numero
+        }
+      });
+      await modal.present();
+      const { data } = await modal.onDidDismiss();
   }
 }
